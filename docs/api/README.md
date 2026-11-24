@@ -20,7 +20,7 @@
 - 필드: camelCase (`memberName`).
 - 상태 코드: API 마다 성공·실패 상태 코드를 적는다 (200, 201, 400, 404 …).
 - 요청·응답 JSON 예시를 반드시 넣는다.
-- 예외 응답은 `{ "code": "...", "message": "..." }` 로 통일하고, 상황별로 하나씩 적는다.
+- 예외 응답은 `{ "status": <숫자>, "message": "..." }` 로 통일하고, 상황별로 하나씩 적는다.
 - 요구사항에 없는 정책(검증 규칙, 권한 등)은 추측하지 않고 설명 칸에 `결정 필요 D<번호>` 라고 적은 뒤 `docs/decisions/<기능명>.md` 에 모은다.
 
 ## 템플릿
@@ -102,13 +102,13 @@ success: <성공 상태 코드> (예: `201 Created`, `200 OK`, `204 No Content`)
 
 ```json
 {
-  "code": "MEMBER_NOT_FOUND",
+  "status": 404,
   "message": "회원을 찾을 수 없습니다."
 }
 ```
 
 | 이름 | 데이터타입 | 필수 | 설명 |
 |---|---|---|---|
-| code | String | Y | 에러 코드 |
+| status | Integer | Y | HTTP 상태 코드 |
 | message | String | Y | 에러 메시지 |
 ````
