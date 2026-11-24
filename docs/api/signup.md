@@ -82,26 +82,26 @@ success: 201 Created
 
 ```json
 {
-  "code": "INVALID_REQUEST",
+  "status": 400,
   "message": "필수 값이 누락되었습니다."
 }
 ```
 
 | 이름 | 데이터타입 | 필수 | 설명 |
 |---|---|---|---|
-| code | String | Y | 에러 코드 |
+| status | Integer | Y | HTTP 상태 코드 |
 | message | String | Y | 에러 메시지 |
 
 **에러 응답:** `409 Conflict` — 이미 가입된 이메일일 때
 
 ```json
 {
-  "code": "DUPLICATE_EMAIL",
+  "status": 409,
   "message": "이미 사용 중인 이메일입니다."
 }
 ```
 
 | 이름 | 데이터타입 | 필수 | 설명 |
 |---|---|---|---|
-| code | String | Y | 에러 코드 |
+| status | Integer | Y | HTTP 상태 코드 |
 | message | String | Y | 에러 메시지 |

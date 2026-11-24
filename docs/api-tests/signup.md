@@ -8,20 +8,39 @@
 
 ## E1. 필수 값 누락 (email 없음)
 준비: 없음
+
+요청
 ```json
-{ "password": "abcd1234", "nickname": "gygim" }
+{
+  "password": "abcd1234",
+  "nickname": "gygim"
+}
 ```
+
 응답 `400`
 ```json
-{ "code": "INVALID_REQUEST", "message": "필수 값이 누락되었습니다." }
+{
+  "status": 400,
+  "message": "필수 값이 누락되었습니다."
+}
 ```
 
 ## E2. 이미 가입된 이메일
 준비: 같은 이메일로 먼저 가입
+
+요청
 ```json
-{ "email": "user@example.com", "password": "abcd1234", "nickname": "gygim" }
+{
+  "email": "user@example.com",
+  "password": "abcd1234",
+  "nickname": "gygim"
+}
 ```
+
 응답 `409`
 ```json
-{ "code": "DUPLICATE_EMAIL", "message": "이미 사용 중인 이메일입니다." }
+{
+  "status": 409,
+  "message": "이미 사용 중인 이메일입니다."
+}
 ```
