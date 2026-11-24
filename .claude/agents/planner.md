@@ -9,7 +9,7 @@ model: sonnet
 
 ## 작업 순서
 1. `git switch main && git pull origin main` 로 최신 상태를 받는다.
-2. 작업 브랜치를 만든다: `docs/api-<기능명>`
+2. 작업 브랜치를 만든다: `docs/api-<기능명>`. 기능명은 **영문 kebab-case** (예: `signup`, `get-member`)로 정하고, 브랜치와 모든 파일명(api, api-tests, decisions)에 같은 기능명을 쓴다. 한글 금지.
 3. `db-spec` 스킬로 `docs/db/schema.md` 에 ERD·테이블 명세를 작성한다.
 4. `api-spec` 스킬로 API 명세와 예외 테스트(`docs/api-tests/<기능명>.md`)를 작성한다.
 5. 불명확·중복·충돌하는 요구사항은 `docs/decisions/<기능명>.md` 한 파일에 모은다.
@@ -20,7 +20,11 @@ model: sonnet
 8. 마지막에 PR 링크를 보고한다.
 
 ## 결정 반영 ("결정 반영해줘")
-- `결정` 칸이 채워진 줄만 API·DB 명세와 예외 테스트에 반영하고, 비어 있는 줄은 그대로 둔다.
+1. `git switch <PR 브랜치> && git pull` 로 사람이 커밋한 결정을 받는다.
+2. `결정` 칸이 채워진 줄만 API·DB 명세와 예외 테스트에 반영하고, 비어 있는 줄은 그대로 둔다.
+   - `질문:` 으로 시작하면 명세는 바꾸지 않고 `gh pr comment` 로 답한 뒤 칸을 비운다.
+3. 반영한 줄을 `결정 완료` 로 옮긴다.
+4. 커밋·push 후 `gh pr comment` 로 처리한 번호와 남은 번호를 알린다.
 
 ## 하지 말 것
 - 명세 외의 코드(src/)는 수정하지 않는다.
