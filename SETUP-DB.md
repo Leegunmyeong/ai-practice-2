@@ -1,7 +1,7 @@
 # DB 세팅 가이드
 
 > 팀이 방식 하나를 골라 프로젝트 시작 때 한 번 적용한다. **우리 팀 기본값: D. Docker MySQL**
-> 예시 이름은 `ai_practice` / 컨테이너 `ai-practice-mysql`. 프로젝트 이름에 맞게 바꾼다.
+> 예시 이름은 `ai_practice2` / 컨테이너 `ai-practice2-mysql`. 프로젝트 이름에 맞게 바꾼다.
 
 ## 방식 비교
 
@@ -39,22 +39,22 @@ spring:
 
 **1. 처음 한 번: 컨테이너 만들기** (강의 4-2 방식, 비밀번호는 `.env` 와 같게)
 ```bash
-docker run -d -p 3307:3306 --name ai-practice-mysql -e MYSQL_ROOT_PASSWORD=<비밀번호> -e MYSQL_DATABASE=ai_practice mysql:8
+docker run -d -p 3307:3306 --name ai-practice2-mysql -e MYSQL_ROOT_PASSWORD=<비밀번호> -e MYSQL_DATABASE=ai_practice2 mysql:8
 ```
 10초 뒤 테스트용 DB 추가:
 ```bash
-docker exec ai-practice-mysql sh -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS ai_practice_test; SHOW DATABASES;"'
+docker exec ai-practice2-mysql sh -c 'mysql -uroot -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE IF NOT EXISTS ai_practice2_test; SHOW DATABASES;"'
 ```
 - 포트 3307: PC 에 설치된 MySQL(3306)과 충돌하지 않게 한다.
-- 비밀번호는 처음 `run` 할 때만 정해진다. 바꾸려면 `docker rm -f ai-practice-mysql` 후 다시 만든다 (데이터 삭제됨).
+- 비밀번호는 처음 `run` 할 때만 정해진다. 바꾸려면 `docker rm -f ai-practice2-mysql` 후 다시 만든다 (데이터 삭제됨).
 
 **2. 매일**
 | 하고 싶은 것 | 명령 (또는 Docker Desktop 버튼) |
 |---|---|
-| 켜기 | `docker start ai-practice-mysql` (▶) |
-| 끄기 | `docker stop ai-practice-mysql` (■) — 데이터 유지 |
+| 켜기 | `docker start ai-practice2-mysql` (▶) |
+| 끄기 | `docker stop ai-practice2-mysql` (■) — 데이터 유지 |
 | 확인 | `docker ps` (초록 점) |
-| 로그 | `docker logs ai-practice-mysql` |
+| 로그 | `docker logs ai-practice2-mysql` |
 
 **3. `.env`**
 ```properties
@@ -66,7 +66,7 @@ DB_PASSWORD=<컨테이너 만들 때 쓴 비밀번호>
 ```yaml
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3307/ai_practice
+    url: jdbc:mysql://localhost:3307/ai_practice2
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD}
   jpa:
@@ -81,7 +81,7 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:mysql://localhost:3307/ai_practice_test
+    url: jdbc:mysql://localhost:3307/ai_practice2_test
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD}
   jpa:
@@ -96,7 +96,7 @@ spring:
 ## B. PC 설치 MySQL
 
 D 와 같고 다음만 다르다.
-- 컨테이너 대신 MySQL 에서 `CREATE DATABASE ai_practice; CREATE DATABASE ai_practice_test;`
+- 컨테이너 대신 MySQL 에서 `CREATE DATABASE ai_practice2; CREATE DATABASE ai_practice2_test;`
 - URL 포트 `3306`
 - 서비스(`services.msc` → MySQL80)가 실행 중이어야 한다.
 
@@ -137,7 +137,7 @@ spring:
 ```yaml
 spring:
   datasource:
-    url: ${DB_URL}              # jdbc:mysql://<RDS 또는 EC2 주소>:3306/ai_practice
+    url: ${DB_URL}              # jdbc:mysql://<RDS 또는 EC2 주소>:3306/ai_practice2
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
   jpa:
@@ -149,7 +149,7 @@ spring:
 ```bash
 docker run -d -p 8080:8080 --name my-app \
   -e SPRING_PROFILES_ACTIVE=prod \
-  -e DB_URL=jdbc:mysql://<주소>:3306/ai_practice \
+  -e DB_URL=jdbc:mysql://<주소>:3306/ai_practice2 \
   -e DB_USERNAME=<계정> \
   -e DB_PASSWORD=<비밀번호> \
   <이미지>:<태그>
